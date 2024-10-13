@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BytePusherCSharp", "BytePusherCSharp.csproj", "{A10C13C9-367D-4C4B-9AFE-E6E23AC7A5AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BytePusherCsharp", "BytePusherCsharp.csproj", "{A10C13C9-367D-4C4B-9AFE-E6E23AC7A5AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

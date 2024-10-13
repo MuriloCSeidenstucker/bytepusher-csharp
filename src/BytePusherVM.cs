@@ -1,14 +1,16 @@
+namespace BytePusherCsharp.src;
 
 public class BytePusherVM
 {
     byte[] memory = new byte[0xFFFFFF];
-    // BytePusherIODriver ioDriver;
+    IBytePusherIODriver ioDriver;
 
-    // public BytePusherVM(BytePusherIODriver ioDriver)
-    // {
-    //     this.ioDriver = ioDriver;
-    // }
+    public BytePusherVM(IBytePusherIODriver ioDriver)
+    {
+        this.ioDriver = ioDriver;
+    }
 
+    // TODO: Implement stream
     public void Load(string rom)
     {
         memory = new byte[0xFFFFFF];
@@ -25,29 +27,29 @@ public class BytePusherVM
 
     public void Run()
     {
-        // var s = ioDriver.GetKeyPress();
-        // memory[0] = (byte)((s & 0xFF00) >> 8);
-        // memory[1] = (byte)(s & 0xFF);
-        var i = 0x10000;
-        int pc = GetValue(2, 3);
-        while (i-- != 0)
+        var s = ioDriver.GetKeyPress();
+        memory[0] = (byte)((s & 0xFF00) >> 8);
+        memory[1] = (byte)(s & 0xFF);
+        var instructionCounter = 0x10000; // 65536
+        int pc = GetAddress(2, 3);
+        while (instructionCounter-- != 0)
         {
-            memory[GetValue(pc + 3, 3)] = memory[GetValue(pc, 3)];
-            pc = GetValue(pc + 6, 3);
+            memory[GetAddress(pc + 3, 3)] = memory[GetAddress(pc, 3)];
+            pc = GetAddress(pc + 6, 3);
         }
-        // ioDriver.RenderAudioFrame(Copy(GetValue(6, 2) << 8, 256));
-        // ioDriver.RenderDisplayFrame(Copy(GetValue(5, 1) << 16, 256 * 256));
+        ioDriver.RenderAudioFrame(Copy(GetAddress(6, 2) << 8, 256));
+        ioDriver.RenderDisplayFrame(Copy(GetAddress(5, 1) << 16, 256 * 256));
     }
 
-    private int GetValue(int pc, int length)
+    private int GetAddress(int pc, int length)
     {
-        var v = 0;
+        var address = 0;
         for (var i = 0; i < length; i++)
         {
-            v = (v << 8) + memory[pc++];
+            address = (address << 8) + memory[pc++];
         }
         
-        return v;
+        return address;
     }
 
     private byte[] Copy(int start, int length)
