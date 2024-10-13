@@ -34,7 +34,11 @@ public class BytePusherVM
         int pc = GetAddress(2, 3);
         while (instructionCounter-- != 0)
         {
-            memory[GetAddress(pc + 3, 3)] = memory[GetAddress(pc, 3)];
+            int sourceIndex = GetAddress(pc, 3);
+            int targetIndex = GetAddress(pc + 3, 3);
+            // Impedir acesso no último índice
+            if (targetIndex >= 0 && targetIndex < memory.Length - 1)
+                memory[targetIndex] = memory[sourceIndex];
             pc = GetAddress(pc + 6, 3);
         }
         ioDriver.RenderAudioFrame(Copy(GetAddress(6, 2) << 8, 256));

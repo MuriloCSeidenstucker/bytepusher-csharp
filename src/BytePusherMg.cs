@@ -27,7 +27,7 @@ public class BytePusherMg : Game
         // Initialize BytePusherVM
         driver = new MgBytepusherIODriver(GraphicsDevice);
         vm = new BytePusherVM(driver);
-        vm.Load(@"C:\Users\mseid\Downloads\nyan.bp");
+        vm.Load(@"C:\Users\mseid\Downloads\Sprites.BytePusher");
 
         // Setup fonts and screen dimensions
         spriteBatch = new SpriteBatch(GraphicsDevice);
